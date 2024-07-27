@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { getData } from "../controller/student.js";
+import { addData, getData } from "../controller/student.js";
 
 const router = Router();
 
 router.get("/students", getData);
 
-router.post("/student", async (req, res) => {});
+router.post("/student", addData);
 
 router.delete("/student/:id", async (req, res) => {});
 

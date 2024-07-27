@@ -1,8 +1,9 @@
 import { Router } from "express";
+import { getData } from "../controller/student.js";
 
 const router = Router();
 
-router.get("/students", async (req, res) => {});
+router.get("/students", getData);
 
 router.post("/student", async (req, res) => {});
 

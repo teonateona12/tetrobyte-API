@@ -85,3 +85,27 @@ export const deleteStudent = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Error deleting student", error });
   }
 };
+
+export const editStudent = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const updateData = req.body;
+
+    const updatedStudent = await Student.findByIdAndUpdate(id, updateData, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedStudent) {
+      res.status(404).json({ message: "Student not found" });
+      return;
+    }
+
+    res.status(200).json({
+      message: "Student updated successfully",
+      student: updatedStudent,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error updating student", error });
+  }
+};

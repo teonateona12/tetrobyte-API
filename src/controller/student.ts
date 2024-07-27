@@ -1,6 +1,7 @@
 import Student from "../models/student.js";
 import { v4 as uuidv4 } from "uuid";
 import { Request, Response } from "express";
+import mongoose from "mongoose";
 
 export const getStudent = async (_: Request, res: Response) => {
   try {
@@ -53,7 +54,6 @@ export const addStudent = async (req: Request, res: Response) => {
     } = req.body;
 
     const newStudent = new Student({
-      id: uuidv4(),
       idNumber,
       code,
       name,
@@ -74,7 +74,6 @@ export const addStudent = async (req: Request, res: Response) => {
       mobility,
       agent,
     });
-
     const savedStudent = await newStudent.save();
     res.status(200).json({ message: "Student added", student: savedStudent });
   } catch (error) {
@@ -102,18 +101,23 @@ export const deleteStudent = async (req: Request, res: Response) => {
 };
 
 export const editStudent = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    const updateData = req.body;
+  const { id } = req.params;
+  const updateData = req.body;
 
-    const updatedStudent = await Student.findByIdAndUpdate(id, updateData, {
-      new: true,
-      runValidators: true,
-    });
+  try {
+    const objectId = new mongoose.Types.ObjectId(id);
+
+    const updatedStudent = await Student.findByIdAndUpdate(
+      objectId,
+      updateData,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
 
     if (!updatedStudent) {
-      res.status(404).json({ message: "Student not found" });
-      return;
+      return res.status(404).json({ message: "Student not found" });
     }
 
     res.status(200).json({
@@ -121,6 +125,9 @@ export const editStudent = async (req: Request, res: Response) => {
       student: updatedStudent,
     });
   } catch (error) {
-    res.status(500).json({ message: "Error updating student", error });
+    console.error("Error updating student:", error);
+    res
+      .status(400)
+      .json({ message: "Invalid ID format or error updating student" });
   }
 };

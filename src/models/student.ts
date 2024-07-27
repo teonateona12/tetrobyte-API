@@ -1,7 +1,8 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { v4 as uuidv4 } from "uuid";
 
 interface IStudent extends Document {
-  id: number;
+  id: string;
   idNumber?: number;
   code?: number;
   name?: string;
@@ -25,7 +26,10 @@ interface IStudent extends Document {
 
 const studentSchema: Schema = new Schema({
   id: {
-    type: Number,
+    type: String,
+    required: true,
+    default: uuidv4,
+    unique: true,
   },
   idNumber: {
     type: Number,

@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 interface IStudent extends Document {
+  id: number;
   idNumber?: number;
   code?: number;
   name?: string;
@@ -24,6 +25,9 @@ interface IStudent extends Document {
 }
 
 const studentSchema: Schema = new Schema({
+  id: {
+    type: Number,
+  },
   idNumber: {
     type: Number,
   },

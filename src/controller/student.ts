@@ -1,5 +1,5 @@
-import fs from "fs";
 import Student from "../models/student.js";
+import { v4 as uuidv4 } from "uuid";
 import { Request, Response } from "express";
 
 export const getData = async (_: Request, res: Response) => {
@@ -37,6 +37,7 @@ export const addData = async (req: Request, res: Response) => {
     } = req.body;
 
     const newStudent = new Student({
+      id: uuidv4(),
       idNumber,
       code,
       name,

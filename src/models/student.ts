@@ -6,7 +6,6 @@ interface IStudent extends Document {
   code?: number;
   name?: string;
   lastName?: string;
-  age?: number;
   yearOfSubmission?: number;
   graduationYear?: number;
   status?: string;
@@ -39,9 +38,6 @@ const studentSchema: Schema = new Schema({
   },
   lastName: {
     type: String,
-  },
-  age: {
-    type: Number,
   },
   yearOfSubmission: {
     type: Number,

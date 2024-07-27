@@ -66,3 +66,22 @@ export const addData = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Error adding student", error });
   }
 };
+
+export const deleteStudent = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const deletedStudent = await Student.findByIdAndDelete(id);
+
+    if (!deletedStudent) {
+      res.status(404).json({ message: "Student not found" });
+      return;
+    }
+
+    res.status(200).json({
+      message: "Student deleted successfully",
+      student: deletedStudent,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting student", error });
+  }
+};

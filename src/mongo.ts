@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 
-const connection = () => {
+const connection = async () => {
+  const url =
+    "mongodb+srv://teonapiranishvili1:teonateona12@cluster0.uimxgxn.mongodb.net/";
+
   try {
-    const url =
-      "mongodb+srv://teonapiranishvili1:teonateona12@cluster0.uimxgxn.mongodb.net/";
-    return mongoose.connect(url);
+    await mongoose.connect(url);
   } catch (error) {
-    console.log(error);
-    return error;
+    console.error("Error connecting to MongoDB:", error);
   }
 };
 
